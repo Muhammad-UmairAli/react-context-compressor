@@ -80,10 +80,9 @@ def add_split_plan_row(phase: str, title: str) -> None:
         sys.exit(f"ERROR: {SPLIT_PLAN} not found. Run from the project root.")
     text = SPLIT_PLAN.read_text(encoding="utf-8")
 
-    # Find the §5 (progress log) section and append a row before the
-    # next ## heading.
+    # Find the §5 (progress log) section (up to the next ## heading or EOF).
     progress_section = re.compile(
-        r"(##\s*§5.*?\n.*?\n)(?=\n*##|\Z)",
+        r"(##\s*§5.*?\n)(?=\n*##|\Z)",
         re.DOTALL,
     )
     m = progress_section.search(text)
@@ -93,13 +92,20 @@ def add_split_plan_row(phase: str, title: str) -> None:
     today = _dt.date.today().isoformat()
     new_row = (
         f"| {today} | Phase {phase} — {title} | IN FLIGHT | "
-        f"(will be filled in at close) |\n"
+        f"(will be filled in at close) |"
     )
 
-    section_text = m.group(1)
-    if not section_text.endswith("\n"):
-        section_text += "\n"
-    new_section = section_text + new_row
+    # Insert the new row immediately after the last markdown table row so it
+    # stays inside the table — not after the trailing '---' separator.
+    section_lines = m.group(1).split("\n")
+    last_table_idx = max(
+        (i for i, line in enumerate(section_lines) if line.lstrip().startswith("|")),
+        default=None,
+    )
+    if last_table_idx is None:
+        sys.exit("ERROR: no table found in ## §5 section of SPLIT-PLAN.md")
+    section_lines.insert(last_table_idx + 1, new_row)
+    new_section = "\n".join(section_lines)
     text = text[: m.start()] + new_section + text[m.end():]
     SPLIT_PLAN.write_text(text, encoding="utf-8")
     print(f"  added SPLIT-PLAN §5 (progress log) row: Phase {phase} — {title}", flush=True)
@@ -185,7 +191,7 @@ def main(argv: list[str]) -> int:
         f"docs/phases/{phase_doc_filename(phase)} skeleton"
     )
     log_cmd = [
-        "python",
+        sys.executable,
         "tools/log-time.py",
         phase,
         "0",

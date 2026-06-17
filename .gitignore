@@ -6,3 +6,7 @@ sandboxes/*/node_modules/
 
 # CCPM — cloned tool dependency with its own git history
 .claude/ccpm/
+
+# Python build artifacts (from kit tools in tools/)
+__pycache__/
+*.pyc

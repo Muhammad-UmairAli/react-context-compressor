@@ -18,8 +18,8 @@ _Project: `<your-project-name>`. Current state: Phase 0 — Project Init complet
 
 <!-- What this project is trying to achieve. Stable; rarely edited. -->
 
-- _Goal 1_
-- _Goal 2_
+- A lightweight React utility that automatically strips non-essential UI data and deep nesting from application state, converting it into a minimal payload for LLMs — drastically lowering AI token costs and preventing oversized data structures from breaking the AI's context window.
+- Client-side data safety: explicitly sanitize and block sensitive fields (user tokens, credentials, internal private IDs) before they ever leak across the network boundary to an external LLM.
 
 ---
 
@@ -27,7 +27,7 @@ _Project: `<your-project-name>`. Current state: Phase 0 — Project Init complet
 
 <!-- What this project is NOT. Defended actively. -->
 
-- _Out-of-scope 1_
+- No semantic or AI-powered text summarization. The library stays a 100% mechanical, zero-cost, client-side JavaScript object parser — no network calls, no local SLMs (Small Language Models) to "summarize" data, since that would defeat the purpose of being ultra-lightweight and saving money before the network layer.
 
 ---
 
@@ -43,10 +43,10 @@ See [`docs/architecture-design-decisions.md`](docs/architecture-design-decisions
 
 <!-- Names and values that must update in EVERY affected file when changed. When editing one of these, walk every row and update every file in it. -->
 
-| Concept                       | Files that must agree                      |
-| ----------------------------- | ------------------------------------------ |
-| _e.g. canonical project name_ | `README.md`, `CLAUDE.md`, `docs/DESIGN.md` |
-| `docs/DESIGN.md` | Visual identity — Binance, BMW M, Airbnb, Airtable; theme picker mandate for VoltAgent |
+| Concept                       | Files that must agree                                                                  |
+| ----------------------------- | -------------------------------------------------------------------------------------- |
+| _e.g. canonical project name_ | `README.md`, `CLAUDE.md`, `docs/DESIGN.md`                                             |
+| `docs/DESIGN.md`              | Visual identity — Binance, BMW M, Airbnb, Airtable; theme picker mandate for VoltAgent |
 
 ---
 
@@ -54,9 +54,10 @@ See [`docs/architecture-design-decisions.md`](docs/architecture-design-decisions
 
 <!-- One-line pointer rows, one per closed phase. Full closure detail lives in docs/phases/phase-NNN.md for non-trivial phases. -->
 
-| Date           | Phase                  | What was done                                                                | What is next                                |
-| -------------- | ---------------------- | ---------------------------------------------------------------------------- | ------------------------------------------- |
-| 2026-06-17 | Phase 0 — Project Init | Bootstrap via `init-project.sh`. See `TIME-LOG.md` Phase 0 rows for actuals. | Define SPLIT-PLAN §1 (goals); open Phase 1. |
+| Date       | Phase                             | What was done                                                                | What is next                                |
+| ---------- | --------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------- |
+| 2026-06-17 | Phase 0 — Project Init            | Bootstrap via `init-project.sh`. See `TIME-LOG.md` Phase 0 rows for actuals. | Define SPLIT-PLAN §1 (goals); open Phase 1. |
+| 2026-06-17 | Phase 1 — compress-state-for-llms | IN FLIGHT                                                                    | (will be filled in at close)                |
 
 ---
 

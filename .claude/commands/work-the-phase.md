@@ -19,7 +19,7 @@ You are entering the autonomous-loop entry point for this project. Follow the ki
 
    Detect Git Flow: if `develop` exists as a remote branch and `docs/methodology/06-git-flow-and-environments.md` is present in the project, Git Flow is in use. Otherwise base flow.
 
-3. **Verify decomposition exists.** Check for `.claude/ccpm/epics/<epic>/`. If tasks already exist there, skip to step 4. If CCPM is not installed, surface and stop. Otherwise run the full decomposition flow:
+3. **Verify decomposition exists.** Check for `.claude/epics/<epic>/`. If tasks already exist there, skip to step 4. If CCPM is not installed, surface and stop. Otherwise run the full decomposition flow:
 
    **3a — Gather requirements.** Ask the user all four questions before proceeding:
    - What problem does this phase solve?
@@ -50,7 +50,7 @@ You are entering the autonomous-loop entry point for this project. Follow the ki
 
 4. **Recommend execution mode** _(skip this step entirely if the user passed `--full-auto`, `--parallel`, or both as arguments — they have already decided)_
 
-   Read the task files in `.claude/ccpm/epics/<epic>/` and compute these four signals:
+   Read the task files in `.claude/epics/<epic>/` and compute these four signals:
    - **N** — total task count
    - **P** — tasks whose `depends_on` is empty or already fully satisfied (parallelisable right now)
    - **D** — longest unbroken dependency chain (serial floor — minimum tasks that must run in sequence regardless of parallelism)

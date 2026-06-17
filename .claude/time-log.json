@@ -174,5 +174,61 @@
     "hours": 0.04105339444444444,
     "who": "claude",
     "notes": "Integration Wizard - Design identity"
+  },
+  {
+    "datetime": "2026-06-17T13:47:05Z",
+    "phase": "0",
+    "step": "23",
+    "hours": 0.07202535861111112,
+    "who": "claude",
+    "notes": "Integration Wizard - Branch protection"
+  },
+  {
+    "datetime": "2026-06-17T13:48:41Z",
+    "phase": "0",
+    "step": "24",
+    "hours": 0.02139456388888889,
+    "who": "claude",
+    "notes": "Integration Wizard - Pre-commit hooks"
+  },
+  {
+    "datetime": "2026-06-17T13:48:54Z",
+    "phase": "0",
+    "step": "16",
+    "hours": 0.23896129833333332,
+    "who": "claude",
+    "notes": "Integration wizard"
+  },
+  {
+    "datetime": "2026-06-17T13:51:56Z",
+    "phase": "0",
+    "step": "16",
+    "hours": 0.2,
+    "who": "claude",
+    "notes": "Defined SPLIT-PLAN §1 (goals) and SPLIT-PLAN §2 (out of scope) interactively"
+  },
+  {
+    "datetime": "2026-06-17T13:54:16Z",
+    "phase": "1",
+    "step": "0",
+    "hours": 0.05,
+    "who": "claude",
+    "notes": "Phase 1 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-001.md skeleton"
+  },
+  {
+    "datetime": "2026-06-17T13:55:36Z",
+    "phase": "1",
+    "step": "0",
+    "hours": 0.1,
+    "who": "claude",
+    "notes": "Self-healing fix: open-phase.py used bare 'python' (crashes where only python3 exists) and inserted the SPLIT-PLAN §5 row after the '---' separator. Fixed both; repaired the orphaned Phase 1 row."
+  },
+  {
+    "datetime": "2026-06-17T14:04:31Z",
+    "phase": "1",
+    "step": "1",
+    "hours": 0.5,
+    "who": "claude",
+    "notes": "Gathered requirements; spawned typescript-pro + frontend-developer for stack proposals; user chose Stack 1 (tsup + pure hook); wrote PRD + epic + 001-005; validated via CCPM validate.sh; self-healed work-the-phase.md .claude/ccpm/epics -> .claude/epics"
   }
 ]
