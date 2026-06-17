@@ -72,4 +72,10 @@ Three rules:
 3. SPLIT-PLAN §6 (backlog) is never modified by an unrelated phase. Stop and ask if tempted.
 -->
 
-_(empty)_
+Deferred from Phase 1 task 001 (scaffold) code review — advisory findings:
+
+- **CI: guard packaging with `@arethetypeswrong/cli` + `publint`.** Add an `attw --pack` / `publint` step so exports-map / type-resolution regressions are caught automatically as real code lands in tasks 002–004.
+- **CI: Node version matrix.** CI pins Node 20 but `engines.node` is `>=18`; add an `18 / 20 / 22` matrix to validate the stated floor.
+- **size-limit: add a CJS budget line.** Only the two ESM entries are size-gated; the React CJS bundle inlines the core. Add a CJS line once real logic exists.
+- **Revisit `tsconfig.json` `ignoreDeprecations: "6.0"`.** Added to silence TS6's `baseUrl` deprecation (injected by tsup's dts build). Confirm it's still needed / not masking a real deprecation when tooling updates.
+- **Document peer-dependency intent.** `react` is an optional peer (core works React-free; `./react` requires React) — document this so `optional: true` isn't read as "React never needed".

@@ -6,11 +6,25 @@ This file pins the conventions this project follows. AI assistants read this fir
 
 <!-- One paragraph. What you're building, for whom, current state of the world. -->
 
-_Replace this paragraph with your project's one-line description._
+`react-context-compressor` is a lightweight, zero-dependency JS/TS library that mechanically strips non-essential UI data and deep nesting from application state and sanitizes sensitive fields (tokens, credentials, private IDs), producing a minimal, safe payload for LLMs — cutting token costs and avoiding context-window overflows. It ships a framework-agnostic core (`.`) plus a thin React bindings layer (`./react`). It is 100% mechanical: no network calls, no models. See SPLIT-PLAN §1 (goals) and SPLIT-PLAN §2 (out of scope).
 
 ## Repo layout
 
 <!-- Reproducible from `ls`; not duplicated here. Note any non-obvious paths. -->
+
+- `src/index.ts` — core entry (framework-agnostic, zero deps): `compress` + `CompressOptions`.
+- `src/react/index.ts` — React bindings entry (`./react`): `useCompressedContext` hook.
+- Build (tsup) emits ESM + CJS + `.d.ts` to `dist/`; `dist/` is published, not committed.
+
+### Commands
+
+The toolchain is Stack 1 (tsup + Vitest + Biome + Changesets + size-limit):
+
+- **Test:** `npm test` (run once) · `npm run test:cov` (with coverage) · `npm run test:watch`
+- **Typecheck:** `npm run typecheck` · **Lint/format:** `npm run lint` / `npm run format` (Biome)
+- **Build:** `npm run build` · **Bundle budget:** `npm run size` (size-limit)
+
+CI (`.github/workflows/ci.yml`) runs typecheck → lint → test+coverage → build → size on every PR.
 
 ## How work is structured
 
