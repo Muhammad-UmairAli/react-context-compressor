@@ -55,12 +55,12 @@ See `docs/methodology/01-orchestration-spine.md` for the close-out checklist.
 This project uses the following design themes (full CSS variable specs in `DASHBOARD.html`
 and documented in `docs/DESIGN.md`):
 
-| Theme | Canvas | Accent |
-|-------|--------|--------|
-| Binance | dark | #fcd535 |
-| BMW M | dark | #1c69d4 |
-| Airbnb | light | #ff385c |
-| Airtable | light | #181d26 |
+| Theme    | Canvas | Accent  |
+| -------- | ------ | ------- |
+| Binance  | dark   | #fcd535 |
+| BMW M    | dark   | #1c69d4 |
+| Airbnb   | light  | #ff385c |
+| Airtable | light  | #181d26 |
 
 **Theme picker requirement:** All frontend UI must include a theme picker that lets users
 switch between these themes at runtime. Apply themes by toggling `data-theme="<slug>"` on
