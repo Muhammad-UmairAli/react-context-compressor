@@ -1,6 +1,10 @@
 node_modules/
 sandboxes/*/node_modules/
 
+# Build + coverage output (dist is published to npm, not committed)
+dist/
+coverage/
+
 # Kit infrastructure — staged assets used by kit slash commands
 .kit/
 

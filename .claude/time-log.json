@@ -230,5 +230,13 @@
     "hours": 0.5,
     "who": "claude",
     "notes": "Gathered requirements; spawned typescript-pro + frontend-developer for stack proposals; user chose Stack 1 (tsup + pure hook); wrote PRD + epic + 001-005; validated via CCPM validate.sh; self-healed work-the-phase.md .claude/ccpm/epics -> .claude/epics"
+  },
+  {
+    "datetime": "2026-06-17T14:35:00Z",
+    "phase": "1",
+    "step": "1",
+    "hours": 0.3,
+    "who": "claude",
+    "notes": "Git Flow: feature/phase-1-decomposition -> PR #1 -> develop. Diagnosed + fixed CI fail (pre-commit --all-files flagged unformatted markdown tables in CLAUDE.md + docs/DESIGN.md); CI green; merged; pruned branch."
   }
 ]
