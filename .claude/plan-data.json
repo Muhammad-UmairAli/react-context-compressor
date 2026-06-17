@@ -163,6 +163,12 @@
         "name": "Requirements, stack selection (VoltAgent), CCPM PRD→Epic→5 tasks, self-heal work-the-phase path",
         "h_baseline": 0.5,
         "h_ai": 0.5
+      },
+      {
+        "num": "2",
+        "name": "Task 001 scaffold: package.json (subpath exports, peer react, zero deps) + tsup/vitest/biome/changesets/size-limit + CI build job + typed stubs. PR #3 -> develop. Code review: 0 blocking.",
+        "h_baseline": 3.0,
+        "h_ai": 3.0
       }
     ]
   }
