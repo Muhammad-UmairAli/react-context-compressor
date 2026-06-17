@@ -1,0 +1,8 @@
+node_modules/
+sandboxes/*/node_modules/
+
+# Kit infrastructure — staged assets used by kit slash commands
+.kit/
+
+# CCPM — cloned tool dependency with its own git history
+.claude/ccpm/

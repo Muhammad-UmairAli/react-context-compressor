@@ -1,0 +1,178 @@
+window.TIME_LOG_DATA = [
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "1",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Verify environment"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "2",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy SPLIT-PLAN.md template"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "3",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy TIME-LOG.md + AGENT-LOG.md templates"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "4",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy DASHBOARD.html stub"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "5",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy TODO.md template"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "6",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy CLAUDE.md template"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "7",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Scaffold docs/ skeleton"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "8",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Scaffold project-level quality configs"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "9",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Scaffold .claude/ skeleton"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "10",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy methodology/ docs"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "11",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy integrations/ docs"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "12",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Copy tools/ scripts"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "13",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Make .claude/hooks/*.sh executable"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "14",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Stage kit assets to .kit/ for slash commands"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "15",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Append Phase 0 row to SPLIT-PLAN §5 (progress log)"
+  },
+  {
+    "datetime": "2026-06-17T13:32:44Z",
+    "phase": "0",
+    "step": "16",
+    "hours": 0.0,
+    "who": "claude",
+    "notes": "Final integrity check"
+  },
+  {
+    "datetime": "2026-06-17T13:35:31Z",
+    "phase": "0",
+    "step": "17",
+    "hours": 0.012854388055555555,
+    "who": "claude",
+    "notes": "Integration Wizard - Project name"
+  },
+  {
+    "datetime": "2026-06-17T13:36:27Z",
+    "phase": "0",
+    "step": "18",
+    "hours": 0.013639857777777778,
+    "who": "claude",
+    "notes": "Integration Wizard - Branching model"
+  },
+  {
+    "datetime": "2026-06-17T13:36:59Z",
+    "phase": "0",
+    "step": "19",
+    "hours": 0.006807994722222222,
+    "who": "claude",
+    "notes": "Integration Wizard - Cloud provider"
+  },
+  {
+    "datetime": "2026-06-17T13:37:56Z",
+    "phase": "0",
+    "step": "20",
+    "hours": 0.014036030277777776,
+    "who": "claude",
+    "notes": "Integration Wizard - CCPM"
+  },
+  {
+    "datetime": "2026-06-17T13:39:40Z",
+    "phase": "0",
+    "step": "21",
+    "hours": 0.02691787361111111,
+    "who": "claude",
+    "notes": "Integration Wizard - AI plugins"
+  },
+  {
+    "datetime": "2026-06-17T13:42:14Z",
+    "phase": "0",
+    "step": "22",
+    "hours": 0.04105339444444444,
+    "who": "claude",
+    "notes": "Integration Wizard - Design identity"
+  }
+];
