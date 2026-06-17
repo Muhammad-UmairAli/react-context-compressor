@@ -14,3 +14,6 @@ coverage/
 # Python build artifacts (from kit tools in tools/)
 __pycache__/
 *.pyc
+
+# Transient agent spawn-tracking state (popped by the complete hook)
+.claude/agent-in-flight.json

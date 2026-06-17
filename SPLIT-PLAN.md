@@ -79,3 +79,19 @@ Deferred from Phase 1 task 001 (scaffold) code review — advisory findings:
 - **size-limit: add a CJS budget line.** Only the two ESM entries are size-gated; the React CJS bundle inlines the core. Add a CJS line once real logic exists.
 - **Revisit `tsconfig.json` `ignoreDeprecations: "6.0"`.** Added to silence TS6's `baseUrl` deprecation (injected by tsup's dts build). Confirm it's still needed / not masking a real deprecation when tooling updates.
 - **Document peer-dependency intent.** `react` is an optional peer (core works React-free; `./react` requires React) — document this so `optional: true` isn't read as "React never needed".
+
+Deferred from Phase 1 task 002 (core compression) code review — advisory findings (blocking B1–B3 + advisory A1 were fixed in the task PR):
+
+- **Map key stringify collisions (A2).** `Map` keys are coerced via `String(k)`, so distinct keys (`1` vs `"1"`, two object keys) silently collapse last-write-wins. Document the limitation and consider collision detection.
+- **Non-plain built-ins flatten surprisingly (A3).** RegExp/Error/TypedArray/URL/WeakMap fall through the class-instance branch (`/re/ → {}`, `Error → {}`, `Uint8Array → {"0":…}`). Add explicit handling (e.g. `String(regexp)`, `{name,message}` for Error) and document which built-ins are normalized.
+- **`maxArrayLength: 0` edge (A4).** Yields `["[+N more]"]` (length 1) when the cap is 0. Decide/document whether the marker should count against a zero cap.
+- **Array extra (non-index) props dropped (A5).** `arr.extra = "x"` is lost (matches `JSON.stringify`). One-sentence doc note.
+- **`dropEmpty` × markers test (A6).** Truncation/`[Circular]` markers are correctly kept (non-empty strings); add a confirming test to pin the interaction.
+- **Edge-case test coverage (A7).** Add backlog tests for null-prototype objects, RegExp/Error/TypedArray values, and `maxArrayLength: 0`.
+
+Deferred from Phase 1 task 002 security audit — no Critical/High; prototype-pollution fix confirmed sound; Medium (deep-recursion DoS) fixed in the PR via a safe default `maxDepth: 100`. Remaining (Low):
+
+- **Throwing getter uncaught in Map/Set iteration + array reads (Finding 3).** The try/catch only wraps object property reads; a Proxy-backed Map/Set/array whose access throws still aborts the walk. Extend the guard to those reads.
+- **ReDoS via user `RegExp` in `strip`/`sanitize` (Finding 5).** Consumer-supplied patterns run against every key; catastrophic backtracking + a long key can hang. Document "avoid nested quantifiers"; optionally cap key length before `test()`. (Consumer-controlled config, so Low.)
+- **`Date` returned by reference (Finding 6).** `instanceof Date` returns the same instance; mutating the returned Date mutates the input's. Return `new Date(value.getTime())` for a true copy.
+- **Task 003 forward-note (Finding 7).** The compression layer is key-name-driven and only sees own enumerable string keys: Symbol-keyed/non-enumerable secrets are dropped structurally (not by rule), getters are evaluated (their values materialize), and `strip` never matches on values. `sanitize` (003) must be value-aware where needed and not assume key-rules cover Symbol/getter-sourced secrets.

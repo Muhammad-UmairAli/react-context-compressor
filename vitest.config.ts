@@ -8,9 +8,15 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.ts", "src/**/*.tsx"],
-      exclude: ["src/**/*.test.*", "src/**/*.d.ts"],
+      // src/react is the React bindings stub; its tests + coverage land in task 004.
+      exclude: ["src/**/*.test.*", "src/**/*.d.ts", "src/react/**"],
       reporter: ["text", "html"],
-      // The >=90% gate on the core lands with real logic in tasks 002/003.
+      thresholds: {
+        lines: 90,
+        functions: 90,
+        branches: 90,
+        statements: 90,
+      },
     },
   },
 });

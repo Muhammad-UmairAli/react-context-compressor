@@ -238,5 +238,13 @@
     "hours": 0.3,
     "who": "claude",
     "notes": "Git Flow: feature/phase-1-decomposition -> PR #1 -> develop. Diagnosed + fixed CI fail (pre-commit --all-files flagged unformatted markdown tables in CLAUDE.md + docs/DESIGN.md); CI green; merged; pruned branch."
+  },
+  {
+    "datetime": "2026-06-17T15:08:33Z",
+    "phase": "1",
+    "step": "2",
+    "hours": 0.5259481958333333,
+    "who": "claude",
+    "notes": "Task 001 scaffold: package.json (subpath exports, peer react, zero deps) + tsup/vitest/biome/changesets/size-limit + CI build job + typed stubs. PR #3 -> develop. Code review: 0 blocking."
   }
 ]
