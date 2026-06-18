@@ -30,10 +30,26 @@ export interface CompressOptions {
   /** When true, drop `null` / `undefined` / `""` / `[]` / `{}` values. */
   dropEmpty?: boolean;
   /**
-   * Sensitive field matchers (exact strings or patterns) to redact or remove.
-   * Applied in task 003; accepted here for a stable options shape.
+   * Extra sensitive field-name matchers to redact/remove, IN ADDITION to the
+   * built-in deny-list (unless {@link CompressOptions.defaultSanitize} is
+   * `false`). A `string` matches a key case-insensitively and exactly; a
+   * `RegExp` matches by pattern. Matching is by field NAME, not value.
    */
   sanitize?: Array<string | RegExp>;
+  /**
+   * Apply the built-in sensitive-field deny-list (password, token, secret,
+   * apiKey, authorization, cookie, ssn, creditCard, …). Default: `true`.
+   * Set `false` to rely solely on {@link CompressOptions.sanitize}.
+   */
+  defaultSanitize?: boolean;
+  /**
+   * How to treat a sensitive field: `"redact"` replaces its value with
+   * {@link CompressOptions.redactedValue}; `"remove"` drops the key entirely.
+   * Either way the value is never read or emitted. Default: `"redact"`.
+   */
+  sanitizeMode?: "redact" | "remove";
+  /** Replacement used when `sanitizeMode` is `"redact"`. Default: `"[REDACTED]"`. */
+  redactedValue?: string;
 }
 
 /**

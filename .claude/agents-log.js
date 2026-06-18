@@ -43,5 +43,23 @@ window.AGENTS_LOG_DATA = [
     "agent_name": "voltagent-qa-sec:security-auditor",
     "parallel": "n",
     "notes": "Task 002 walker security audit: prototype-pollution fix confirmed sound; 1 Medium (deep-recursion DoS) fixed; Lows -> backlog"
+  },
+  {
+    "datetime": "2026-06-18T14:48:46Z",
+    "phase": "1",
+    "step": "4",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "y",
+    "notes": "Task 003 sanitization review: 2 blocking (deny-list false positives) fixed"
+  },
+  {
+    "datetime": "2026-06-18T14:48:46Z",
+    "phase": "1",
+    "step": "4",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:security-auditor",
+    "parallel": "y",
+    "notes": "Task 003 sanitization audit: no Critical; 3 High (false-neg deny-list, Unicode evasion, Map-key tests) fixed"
   }
 ];

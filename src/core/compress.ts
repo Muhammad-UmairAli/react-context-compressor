@@ -7,6 +7,7 @@
  */
 
 import type { CompressOptions } from "../index";
+import { isSensitiveKey, REDACTED, regexTest } from "./sanitize";
 
 /** Marker substituted for a node that exceeds {@link CompressOptions.maxDepth}. */
 export const TRUNCATED_OBJECT = "[Object]";
@@ -31,6 +32,10 @@ interface ResolvedOptions {
   maxArrayLength: number;
   strip: Array<string | RegExp>;
   dropEmpty: boolean;
+  sanitize: Array<string | RegExp>;
+  defaultSanitize: boolean;
+  sanitizeMode: "redact" | "remove";
+  redactedValue: string;
 }
 
 const DEFAULTS: ResolvedOptions = {
@@ -38,6 +43,10 @@ const DEFAULTS: ResolvedOptions = {
   maxArrayLength: Number.POSITIVE_INFINITY,
   strip: [],
   dropEmpty: false,
+  sanitize: [],
+  defaultSanitize: true,
+  sanitizeMode: "redact",
+  redactedValue: REDACTED,
 };
 
 /** A unique sentinel meaning "this value should be omitted from the output". */
@@ -68,7 +77,7 @@ export function keyMatches(key: string, matchers: ReadonlyArray<string | RegExp>
   for (const matcher of matchers) {
     if (typeof matcher === "string") {
       if (matcher === key) return true;
-    } else if (matcher.test(key)) {
+    } else if (regexTest(matcher, key)) {
       return true;
     }
   }
@@ -92,6 +101,10 @@ export function resolveOptions(options: CompressOptions): ResolvedOptions {
     maxArrayLength: options.maxArrayLength ?? DEFAULTS.maxArrayLength,
     strip: options.strip ?? DEFAULTS.strip,
     dropEmpty: options.dropEmpty ?? DEFAULTS.dropEmpty,
+    sanitize: options.sanitize ?? DEFAULTS.sanitize,
+    defaultSanitize: options.defaultSanitize ?? DEFAULTS.defaultSanitize,
+    sanitizeMode: options.sanitizeMode ?? DEFAULTS.sanitizeMode,
+    redactedValue: options.redactedValue ?? DEFAULTS.redactedValue,
   };
 }
 
@@ -105,6 +118,13 @@ function walkObjectInto(
 ): void {
   for (const key of Object.keys(source)) {
     if (keyMatches(key, opts.strip)) continue;
+    // Sanitize BEFORE reading the value: a sensitive value is never read
+    // (no getter fired), never walked, and never reaches the output.
+    if (isSensitiveKey(key, opts.sanitize, opts.defaultSanitize)) {
+      if (opts.sanitizeMode === "remove") continue;
+      safeAssign(out, key, opts.redactedValue);
+      continue;
+    }
     let raw: unknown;
     try {
       raw = source[key];

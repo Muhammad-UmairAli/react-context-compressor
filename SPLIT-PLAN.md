@@ -95,3 +95,12 @@ Deferred from Phase 1 task 002 security audit — no Critical/High; prototype-po
 - **ReDoS via user `RegExp` in `strip`/`sanitize` (Finding 5).** Consumer-supplied patterns run against every key; catastrophic backtracking + a long key can hang. Document "avoid nested quantifiers"; optionally cap key length before `test()`. (Consumer-controlled config, so Low.)
 - **`Date` returned by reference (Finding 6).** `instanceof Date` returns the same instance; mutating the returned Date mutates the input's. Return `new Date(value.getTime())` for a true copy.
 - **Task 003 forward-note (Finding 7).** The compression layer is key-name-driven and only sees own enumerable string keys: Symbol-keyed/non-enumerable secrets are dropped structurally (not by rule), getters are evaluated (their values materialize), and `strip` never matches on values. `sanitize` (003) must be value-aware where needed and not assume key-rules cover Symbol/getter-sourced secrets.
+
+Deferred from Phase 1 task 003 (sanitization) code review + security audit — no Critical; all High (B1/B2 deny-list false positives, F2 false-negatives, F3 Unicode/zero-width evasion) fixed in the task PR. Remaining (Low/Medium):
+
+- **Throwing getter / Proxy in Map/Set iteration + array reads (sec F1/Finding 3).** Same gap as task 002: the try/catch covers object property reads only. Extend to Map/Set iteration and array element reads.
+- **Homoglyph confusables (sec F3 residual).** NFKC + zero-width stripping defeats fullwidth/zero-width evasion but not deliberate Cyrillic/Greek look-alike keys. A confusables map would close it; documented as a known residual.
+- **`redactedValue` runtime coercion (review A2).** Typed `string` but a JS caller could pass a non-string (e.g. `0`), which is emitted verbatim. Coerce via `String(...)` in `resolveOptions` or document.
+- **Dev-mode warning when redaction fully disabled (sec F8).** `defaultSanitize:false` + empty `sanitize` silently turns off all redaction; emit a `console.warn` in dev.
+- **Optional key-length cap before matching (sec F7).** Defense-in-depth against ReDoS from consumer patterns over very long (e.g. Map-coerced) keys.
+- **Lower-signal deny-list additions.** `salt`, `hash`, `clientId`, `cert`/`pem` — higher false-positive risk; evaluate before adding.

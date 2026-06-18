@@ -246,5 +246,13 @@
     "hours": 0.5259481958333333,
     "who": "claude",
     "notes": "Task 001 scaffold: package.json (subpath exports, peer react, zero deps) + tsup/vitest/biome/changesets/size-limit + CI build job + typed stubs. PR #3 -> develop. Code review: 0 blocking."
+  },
+  {
+    "datetime": "2026-06-17T15:37:56Z",
+    "phase": "1",
+    "step": "3",
+    "hours": 0.45933667861111116,
+    "who": "claude",
+    "notes": "Task 002 core compression walker: depth/strip/array-cap/dropEmpty/circular + Date/Map/Set/BigInt; code review (3 blocking fixed) + security audit (proto-pollution sound, DoS fixed); 30 tests, 100%/98.6% cov. PR #5 -> develop."
   }
 ]
