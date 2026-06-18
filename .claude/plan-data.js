@@ -175,6 +175,12 @@ window.PLAN_DATA = {
         "name": "Task 002 core compression walker: depth/strip/array-cap/dropEmpty/circular + Date/Map/Set/BigInt; code review (3 blocking fixed) + security audit (proto-pollution sound, DoS fixed); 30 tests, 100%/98.6% cov. PR #5 -> develop.",
         "h_baseline": 4.0,
         "h_ai": 4.0
+      },
+      {
+        "num": "4",
+        "name": "Task 003 sanitization: key-name deny-list (redact/remove), no-leak guarantee; code review (2 blocking) + security audit (3 High) fixed; 115 tests, 100%/98.96% cov. PR #7 -> develop.",
+        "h_baseline": 3.0,
+        "h_ai": 3.0
       }
     ]
   }
