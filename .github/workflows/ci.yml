@@ -41,4 +41,6 @@ jobs:
       - run: npm run lint
       - run: npm run test:cov
       - run: npm run build
+      - run: npx attw --pack
+      - run: npx publint
       - run: npm run size
