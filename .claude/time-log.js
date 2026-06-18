@@ -278,5 +278,21 @@ window.TIME_LOG_DATA = [
     "hours": 0.2021187475,
     "who": "claude",
     "notes": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T15:49:51Z",
+    "phase": "2",
+    "step": "0",
+    "hours": 0.05,
+    "who": "claude",
+    "notes": "Phase 2 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-002.md skeleton"
+  },
+  {
+    "datetime": "2026-06-18T15:52:30Z",
+    "phase": "2",
+    "step": "1",
+    "hours": 0.4,
+    "who": "claude",
+    "notes": "Phase 2 (hardening) decomposition: lean PRD + epic + 4 tasks (packaging guards, CI matrices, robustness, edge tests); validated via CCPM validate.sh"
   }
 ];
