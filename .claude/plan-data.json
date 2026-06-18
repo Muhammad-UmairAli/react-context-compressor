@@ -88,7 +88,7 @@
       },
       {
         "num": "15",
-        "name": "Append Phase 0 row to SPLIT-PLAN §5 (progress log)",
+        "name": "Append Phase 0 row to SPLIT-PLAN \u00a75 (progress log)",
         "h_baseline": 0.0,
         "h_ai": 0.0
       },
@@ -154,13 +154,13 @@
     "steps": [
       {
         "num": "0",
-        "name": "Phase 1 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-001.md skeleton",
+        "name": "Phase 1 opened \u2014 SPLIT-PLAN \u00a75 (progress log) + docs/phases/phase-001.md skeleton",
         "h_baseline": 0.05,
         "h_ai": 0.05
       },
       {
         "num": "1",
-        "name": "Requirements, stack selection (VoltAgent), CCPM PRD→Epic→5 tasks, self-heal work-the-phase path",
+        "name": "Requirements, stack selection (VoltAgent), CCPM PRD\u2192Epic\u21925 tasks, self-heal work-the-phase path",
         "h_baseline": 0.5,
         "h_ai": 0.5
       },
@@ -187,7 +187,14 @@
         "name": "Task 004 React hook: memoized useCompressedContext, collision-free options signature; code review (1 blocking) fixed; 127 tests, 100%/99.13%. PR #9 -> develop.",
         "h_baseline": 2.0,
         "h_ai": 2.0
+      },
+      {
+        "num": "6",
+        "name": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop.",
+        "h_baseline": 4.0,
+        "h_ai": 4.0
       }
-    ]
+    ],
+    "completed": "2026-06-18"
   }
 }
