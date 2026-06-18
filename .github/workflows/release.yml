@@ -1,0 +1,39 @@
+name: Release
+
+# Publishes to npm when a v* tag is pushed. The publish step is guarded on the
+# NPM_TOKEN secret, so it stays green until trusted publishing / a token is set
+# up — then future `vX.Y.Z` tags publish automatically with provenance.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # required for npm provenance
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+      - name: Publish (provenance)
+        if: ${{ env.NPM_TOKEN != '' }}
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+      - name: No token — skipping publish
+        if: ${{ env.NPM_TOKEN == '' }}
+        run: echo "NPM_TOKEN not set; skipping npm publish. Add the secret to enable automated publishing."
