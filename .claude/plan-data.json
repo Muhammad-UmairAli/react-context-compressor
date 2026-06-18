@@ -211,6 +211,18 @@
         "name": "Phase 2 decomposition: PRD + epic + tasks 001-004",
         "h_baseline": 0.4,
         "h_ai": 0.4
+      },
+      {
+        "num": "2",
+        "name": "Task 001 packaging guards: attw + publint CI, sourcemap trim (tarball 17->12 files). Worktree agent; code review APPROVE. PR #19.",
+        "h_baseline": 2.0,
+        "h_ai": 2.0
+      },
+      {
+        "num": "4",
+        "name": "Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20.",
+        "h_baseline": 3.0,
+        "h_ai": 3.0
       }
     ]
   }

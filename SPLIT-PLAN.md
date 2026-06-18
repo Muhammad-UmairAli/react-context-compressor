@@ -108,4 +108,11 @@ Deferred from Phase 1 task 003 (sanitization) code review + security audit — n
 
 Deferred from Phase 1 task 004 (React hook) code review — blocking B1 (signature collision) fixed in PR:
 
-- **Cross-version React test matrix (A5).** Only React 19 is installed/tested; 17/18 compatibility rests on the `useMemo`-only surface. Pin with a React 17/18/19 matrix test if desired.
+- **Cross-version React test matrix (A5).** Only React 19 is installed/tested; 17/18 compatibility rests on the `useMemo`-only surface. Pin with a React 17/18/19 matrix test if desired. _(Phase 2 task 002 addresses this.)_
+
+Deferred from Phase 2 round 1 (tasks 001 + 003) code review + security audit — no blocking; advisories only:
+
+- **CI: call `npm run attw`/`npm run publint` instead of bare `npx` (001).** The scripts are pinned in package.json; `npm run` guarantees the lockfile versions run.
+- **Dangling `sourceMappingURL` comments in published JS (001).** Maps are excluded from the tarball but the `//# sourceMappingURL` comments remain (harmless; publint passes). Drop them from the published build for a fully-clean tarball.
+- **Dev-warning one-shot latch (003).** `warnIfRedactionDisabled` fires once per `compress` call; with `defaultSanitize:false` in a React render path it can flood the console. Use a module-level `let warned` latch (dev-only).
+- **Harden `NODE_ENV` read vs hostile `process` shim (003).** `proc.env?.NODE_ENV` could throw if a third party defines a `globalThis.process` with a throwing `env` getter; wrap in try/catch so `compress` never throws.

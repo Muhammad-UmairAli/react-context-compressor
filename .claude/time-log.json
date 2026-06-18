@@ -294,5 +294,21 @@
     "hours": 0.4,
     "who": "claude",
     "notes": "Phase 2 (hardening) decomposition: lean PRD + epic + 4 tasks (packaging guards, CI matrices, robustness, edge tests); validated via CCPM validate.sh"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "2",
+    "hours": 0.2936919736111111,
+    "who": "claude",
+    "notes": "Task 001 packaging guards: attw + publint CI, sourcemap trim (tarball 17->12 files). Worktree agent; code review APPROVE. PR #19."
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "4",
+    "hours": 0.29369281138888886,
+    "who": "claude",
+    "notes": "Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20."
   }
 ]
