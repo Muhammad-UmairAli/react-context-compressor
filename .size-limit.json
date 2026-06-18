@@ -1,0 +1,12 @@
+[
+  {
+    "name": "core (ESM, gzip)",
+    "path": "dist/index.mjs",
+    "limit": "3 kB"
+  },
+  {
+    "name": "react bindings (ESM, gzip)",
+    "path": "dist/react/index.mjs",
+    "limit": "2 kB"
+  }
+]

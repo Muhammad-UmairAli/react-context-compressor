@@ -1,8 +1,19 @@
 node_modules/
 sandboxes/*/node_modules/
 
+# Build + coverage output (dist is published to npm, not committed)
+dist/
+coverage/
+
 # Kit infrastructure — staged assets used by kit slash commands
 .kit/
 
 # CCPM — cloned tool dependency with its own git history
 .claude/ccpm/
+
+# Python build artifacts (from kit tools in tools/)
+__pycache__/
+*.pyc
+
+# Transient agent spawn-tracking state (popped by the complete hook)
+.claude/agent-in-flight.json

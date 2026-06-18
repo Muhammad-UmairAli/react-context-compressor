@@ -95,8 +95,8 @@
       {
         "num": "16",
         "name": "Final integrity check",
-        "h_baseline": 0.0,
-        "h_ai": 0.0
+        "h_baseline": 0.2,
+        "h_ai": 0.2
       },
       {
         "num": "17",
@@ -139,8 +139,62 @@
         "name": "Integration Wizard - Branch protection",
         "h_baseline": 0.05,
         "h_ai": 0.05
+      },
+      {
+        "num": "24",
+        "name": "Integration Wizard - Pre-commit hooks",
+        "h_baseline": 0.017,
+        "h_ai": 0.017
       }
     ],
     "completed": "2026-06-17"
+  },
+  "1": {
+    "label": "compress-state-for-llms",
+    "steps": [
+      {
+        "num": "0",
+        "name": "Phase 1 opened \u2014 SPLIT-PLAN \u00a75 (progress log) + docs/phases/phase-001.md skeleton",
+        "h_baseline": 0.05,
+        "h_ai": 0.05
+      },
+      {
+        "num": "1",
+        "name": "Requirements, stack selection (VoltAgent), CCPM PRD\u2192Epic\u21925 tasks, self-heal work-the-phase path",
+        "h_baseline": 0.5,
+        "h_ai": 0.5
+      },
+      {
+        "num": "2",
+        "name": "Task 001 scaffold: package.json (subpath exports, peer react, zero deps) + tsup/vitest/biome/changesets/size-limit + CI build job + typed stubs. PR #3 -> develop. Code review: 0 blocking.",
+        "h_baseline": 3.0,
+        "h_ai": 3.0
+      },
+      {
+        "num": "3",
+        "name": "Task 002 core compression walker: depth/strip/array-cap/dropEmpty/circular + Date/Map/Set/BigInt; code review (3 blocking fixed) + security audit (proto-pollution sound, DoS fixed); 30 tests, 100%/98.6% cov. PR #5 -> develop.",
+        "h_baseline": 4.0,
+        "h_ai": 4.0
+      },
+      {
+        "num": "4",
+        "name": "Task 003 sanitization: key-name deny-list (redact/remove), no-leak guarantee; code review (2 blocking) + security audit (3 High) fixed; 115 tests, 100%/98.96% cov. PR #7 -> develop.",
+        "h_baseline": 3.0,
+        "h_ai": 3.0
+      },
+      {
+        "num": "5",
+        "name": "Task 004 React hook: memoized useCompressedContext, collision-free options signature; code review (1 blocking) fixed; 127 tests, 100%/99.13%. PR #9 -> develop.",
+        "h_baseline": 2.0,
+        "h_ai": 2.0
+      },
+      {
+        "num": "6",
+        "name": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop.",
+        "h_baseline": 4.0,
+        "h_ai": 4.0
+      }
+    ],
+    "completed": "2026-06-18"
   }
 }

@@ -174,5 +174,109 @@ window.TIME_LOG_DATA = [
     "hours": 0.04105339444444444,
     "who": "claude",
     "notes": "Integration Wizard - Design identity"
+  },
+  {
+    "datetime": "2026-06-17T13:47:05Z",
+    "phase": "0",
+    "step": "23",
+    "hours": 0.07202535861111112,
+    "who": "claude",
+    "notes": "Integration Wizard - Branch protection"
+  },
+  {
+    "datetime": "2026-06-17T13:48:41Z",
+    "phase": "0",
+    "step": "24",
+    "hours": 0.02139456388888889,
+    "who": "claude",
+    "notes": "Integration Wizard - Pre-commit hooks"
+  },
+  {
+    "datetime": "2026-06-17T13:48:54Z",
+    "phase": "0",
+    "step": "16",
+    "hours": 0.23896129833333332,
+    "who": "claude",
+    "notes": "Integration wizard"
+  },
+  {
+    "datetime": "2026-06-17T13:51:56Z",
+    "phase": "0",
+    "step": "16",
+    "hours": 0.2,
+    "who": "claude",
+    "notes": "Defined SPLIT-PLAN §1 (goals) and SPLIT-PLAN §2 (out of scope) interactively"
+  },
+  {
+    "datetime": "2026-06-17T13:54:16Z",
+    "phase": "1",
+    "step": "0",
+    "hours": 0.05,
+    "who": "claude",
+    "notes": "Phase 1 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-001.md skeleton"
+  },
+  {
+    "datetime": "2026-06-17T13:55:36Z",
+    "phase": "1",
+    "step": "0",
+    "hours": 0.1,
+    "who": "claude",
+    "notes": "Self-healing fix: open-phase.py used bare 'python' (crashes where only python3 exists) and inserted the SPLIT-PLAN §5 row after the '---' separator. Fixed both; repaired the orphaned Phase 1 row."
+  },
+  {
+    "datetime": "2026-06-17T14:04:31Z",
+    "phase": "1",
+    "step": "1",
+    "hours": 0.5,
+    "who": "claude",
+    "notes": "Gathered requirements; spawned typescript-pro + frontend-developer for stack proposals; user chose Stack 1 (tsup + pure hook); wrote PRD + epic + 001-005; validated via CCPM validate.sh; self-healed work-the-phase.md .claude/ccpm/epics -> .claude/epics"
+  },
+  {
+    "datetime": "2026-06-17T14:35:00Z",
+    "phase": "1",
+    "step": "1",
+    "hours": 0.3,
+    "who": "claude",
+    "notes": "Git Flow: feature/phase-1-decomposition -> PR #1 -> develop. Diagnosed + fixed CI fail (pre-commit --all-files flagged unformatted markdown tables in CLAUDE.md + docs/DESIGN.md); CI green; merged; pruned branch."
+  },
+  {
+    "datetime": "2026-06-17T15:08:33Z",
+    "phase": "1",
+    "step": "2",
+    "hours": 0.5259481958333333,
+    "who": "claude",
+    "notes": "Task 001 scaffold: package.json (subpath exports, peer react, zero deps) + tsup/vitest/biome/changesets/size-limit + CI build job + typed stubs. PR #3 -> develop. Code review: 0 blocking."
+  },
+  {
+    "datetime": "2026-06-17T15:37:56Z",
+    "phase": "1",
+    "step": "3",
+    "hours": 0.45933667861111116,
+    "who": "claude",
+    "notes": "Task 002 core compression walker: depth/strip/array-cap/dropEmpty/circular + Date/Map/Set/BigInt; code review (3 blocking fixed) + security audit (proto-pollution sound, DoS fixed); 30 tests, 100%/98.6% cov. PR #5 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T14:54:28Z",
+    "phase": "1",
+    "step": "4",
+    "hours": 8.0,
+    "who": "claude",
+    "notes": "Task 003 sanitization: key-name deny-list (redact/remove), no-leak guarantee; code review (2 blocking) + security audit (3 High) fixed; 115 tests, 100%/98.96% cov. PR #7 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T15:08:31Z",
+    "phase": "1",
+    "step": "5",
+    "hours": 0.2197956288888889,
+    "who": "claude",
+    "notes": "Task 004 React hook: memoized useCompressedContext, collision-free options signature; code review (1 blocking) fixed; 127 tests, 100%/99.13%. PR #9 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T15:21:31Z",
+    "phase": "1",
+    "step": "6",
+    "hours": 0.2021187475,
+    "who": "claude",
+    "notes": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop."
   }
 ];
