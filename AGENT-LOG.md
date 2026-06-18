@@ -25,3 +25,11 @@ Columns: Date (UTC) | Phase | Step | Framework | AgentName | Parallel | Notes
 | Date                 | Phase | Step | Framework | AgentName                      | Parallel | Notes                                                                                     |
 | -------------------- | ----- | ---- | --------- | ------------------------------ | -------- | ----------------------------------------------------------------------------------------- |
 | 2026-06-18T15:17:48Z | 1     | 6    | VoltAgent | voltagent-qa-sec:code-reviewer | n        | Task 005 docs review: APPROVE, 0 blocking; README verified against shipped API (no drift) |
+
+| Date                 | Phase | Step | Framework | AgentName                         | Parallel | Notes                                                         |
+| -------------------- | ----- | ---- | --------- | --------------------------------- | -------- | ------------------------------------------------------------- |
+| 2026-06-18T16:15:24Z | 2     | 2    | Claude    | general-purpose                   | y        | Task 001 impl in worktree (packaging guards + sourcemap trim) |
+| 2026-06-18T16:15:24Z | 2     | 2    | VoltAgent | voltagent-qa-sec:code-reviewer    | y        | Task 001 review: APPROVE, 0 blocking                          |
+| 2026-06-18T16:15:24Z | 2     | 4    | Claude    | general-purpose                   | y        | Task 003 impl in worktree (robustness hardening)              |
+| 2026-06-18T16:15:24Z | 2     | 4    | VoltAgent | voltagent-qa-sec:code-reviewer    | y        | Task 003 review: APPROVE, 0 blocking                          |
+| 2026-06-18T16:15:24Z | 2     | 4    | VoltAgent | voltagent-qa-sec:security-auditor | y        | Task 003 audit: no Critical/High; no-leak preserved           |
