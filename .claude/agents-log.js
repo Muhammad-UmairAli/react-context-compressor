@@ -70,5 +70,14 @@ window.AGENTS_LOG_DATA = [
     "agent_name": "voltagent-qa-sec:code-reviewer",
     "parallel": "n",
     "notes": "Task 004 React hook review: 1 blocking (signature collision B1) fixed + regression test"
+  },
+  {
+    "datetime": "2026-06-18T15:17:48Z",
+    "phase": "1",
+    "step": "6",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "n",
+    "notes": "Task 005 docs review: APPROVE, 0 blocking; README verified against shipped API (no drift)"
   }
 ];
