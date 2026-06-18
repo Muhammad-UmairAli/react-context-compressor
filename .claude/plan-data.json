@@ -88,7 +88,7 @@
       },
       {
         "num": "15",
-        "name": "Append Phase 0 row to SPLIT-PLAN \u00a75 (progress log)",
+        "name": "Append Phase 0 row to SPLIT-PLAN §5 (progress log)",
         "h_baseline": 0.0,
         "h_ai": 0.0
       },
@@ -154,13 +154,13 @@
     "steps": [
       {
         "num": "0",
-        "name": "Phase 1 opened \u2014 SPLIT-PLAN \u00a75 (progress log) + docs/phases/phase-001.md skeleton",
+        "name": "Phase 1 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-001.md skeleton",
         "h_baseline": 0.05,
         "h_ai": 0.05
       },
       {
         "num": "1",
-        "name": "Requirements, stack selection (VoltAgent), CCPM PRD\u2192Epic\u21925 tasks, self-heal work-the-phase path",
+        "name": "Requirements, stack selection (VoltAgent), CCPM PRD→Epic→5 tasks, self-heal work-the-phase path",
         "h_baseline": 0.5,
         "h_ai": 0.5
       },
@@ -196,5 +196,22 @@
       }
     ],
     "completed": "2026-06-18"
+  },
+  "2": {
+    "label": "hardening-release-quality",
+    "steps": [
+      {
+        "num": "0",
+        "name": "Phase 2 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-002.md skeleton",
+        "h_baseline": 0.05,
+        "h_ai": 0.05
+      },
+      {
+        "num": "1",
+        "name": "Phase 2 decomposition: PRD + epic + tasks 001-004",
+        "h_baseline": 0.4,
+        "h_ai": 0.4
+      }
+    ]
   }
 }

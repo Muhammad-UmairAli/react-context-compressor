@@ -196,5 +196,22 @@ window.PLAN_DATA = {
       }
     ],
     "completed": "2026-06-18"
+  },
+  "2": {
+    "label": "hardening-release-quality",
+    "steps": [
+      {
+        "num": "0",
+        "name": "Phase 2 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-002.md skeleton",
+        "h_baseline": 0.05,
+        "h_ai": 0.05
+      },
+      {
+        "num": "1",
+        "name": "Phase 2 decomposition: PRD + epic + tasks 001-004",
+        "h_baseline": 0.4,
+        "h_ai": 0.4
+      }
+    ]
   }
 };
