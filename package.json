@@ -29,7 +29,8 @@
   ],
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/*.map"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -67,6 +68,8 @@
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
     "size": "size-limit",
+    "attw": "attw --pack",
+    "publint": "publint",
     "changeset": "changeset",
     "prepublishOnly": "npm run build"
   },
@@ -85,6 +88,7 @@
     "node": ">=18"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.3",
     "@biomejs/biome": "^2.5.0",
     "@changesets/cli": "^2.31.0",
     "@size-limit/preset-small-lib": "^12.1.0",
@@ -93,6 +97,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitest/coverage-v8": "^4.1.9",
     "jsdom": "^29.1.1",
+    "publint": "^0.3.21",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "size-limit": "^12.1.0",
