@@ -254,5 +254,13 @@ window.TIME_LOG_DATA = [
     "hours": 0.45933667861111116,
     "who": "claude",
     "notes": "Task 002 core compression walker: depth/strip/array-cap/dropEmpty/circular + Date/Map/Set/BigInt; code review (3 blocking fixed) + security audit (proto-pollution sound, DoS fixed); 30 tests, 100%/98.6% cov. PR #5 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T14:54:28Z",
+    "phase": "1",
+    "step": "4",
+    "hours": 8.0,
+    "who": "claude",
+    "notes": "Task 003 sanitization: key-name deny-list (redact/remove), no-leak guarantee; code review (2 blocking) + security audit (3 High) fixed; 115 tests, 100%/98.96% cov. PR #7 -> develop."
   }
 ];

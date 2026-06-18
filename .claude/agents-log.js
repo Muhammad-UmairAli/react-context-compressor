@@ -61,5 +61,14 @@ window.AGENTS_LOG_DATA = [
     "agent_name": "voltagent-qa-sec:security-auditor",
     "parallel": "y",
     "notes": "Task 003 sanitization audit: no Critical; 3 High (false-neg deny-list, Unicode evasion, Map-key tests) fixed"
+  },
+  {
+    "datetime": "2026-06-18T15:04:22Z",
+    "phase": "1",
+    "step": "5",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "n",
+    "notes": "Task 004 React hook review: 1 blocking (signature collision B1) fixed + regression test"
   }
 ];

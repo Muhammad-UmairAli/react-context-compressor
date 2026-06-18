@@ -8,8 +8,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**/*.ts", "src/**/*.tsx"],
-      // src/react is the React bindings stub; its tests + coverage land in task 004.
-      exclude: ["src/**/*.test.*", "src/**/*.d.ts", "src/react/**"],
+      exclude: ["src/**/*.test.*", "src/**/*.d.ts"],
       reporter: ["text", "html"],
       thresholds: {
         lines: 90,
