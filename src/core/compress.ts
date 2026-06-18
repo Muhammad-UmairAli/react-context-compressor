@@ -92,6 +92,21 @@ function isEmptyValue(value: unknown): boolean {
 }
 
 /**
+ * Coerce a caller-supplied `redactedValue` to a string so a non-string passed
+ * by a JS caller (bypassing the TS type) can never leak through as a raw value.
+ * `String(x)` can itself throw on a hostile `toString`/`Symbol.toPrimitive`;
+ * fall back to the default rather than crashing — `compress` must never throw.
+ */
+function coerceRedactedValue(value: unknown): string {
+  if (value === null || value === undefined) return DEFAULTS.redactedValue;
+  try {
+    return String(value);
+  } catch {
+    return DEFAULTS.redactedValue;
+  }
+}
+
+/**
  * Resolve user options against defaults. Exposed so the React layer and
  * sanitization can share one normalization path.
  */
@@ -104,7 +119,7 @@ export function resolveOptions(options: CompressOptions): ResolvedOptions {
     sanitize: options.sanitize ?? DEFAULTS.sanitize,
     defaultSanitize: options.defaultSanitize ?? DEFAULTS.defaultSanitize,
     sanitizeMode: options.sanitizeMode ?? DEFAULTS.sanitizeMode,
-    redactedValue: options.redactedValue ?? DEFAULTS.redactedValue,
+    redactedValue: coerceRedactedValue(options.redactedValue),
   };
 }
 
@@ -159,18 +174,36 @@ function walk(
   if (seen.has(ref)) return CIRCULAR;
 
   // Non-plain objects we deliberately normalize for a predictable payload.
-  if (value instanceof Date) return value;
+  // Date is deep-copied so the output never shares a live reference with the
+  // input (mutating the returned Date can't reach back into the source).
+  if (value instanceof Date) return new Date(value.getTime());
   if (value instanceof Map) {
     seen.add(ref);
     const obj: Record<string, unknown> = {};
-    for (const [k, v] of value) safeAssign(obj, String(k), v);
+    // A Proxy-backed/hostile Map can throw during iteration or per-entry read;
+    // degrade the whole map to the getter marker rather than crashing the walk.
+    try {
+      for (const [k, v] of value) safeAssign(obj, String(k), v);
+    } catch {
+      seen.delete(ref);
+      return GETTER_ERROR;
+    }
     const result = walk(obj, depth, opts, seen);
     seen.delete(ref);
     return result;
   }
   if (value instanceof Set) {
     seen.add(ref);
-    const result = walk(Array.from(value), depth, opts, seen);
+    let items: unknown[];
+    // Array.from drives the Set's iterator, which a Proxy-backed/hostile Set can
+    // make throw; degrade to the marker instead of crashing the walk.
+    try {
+      items = Array.from(value);
+    } catch {
+      seen.delete(ref);
+      return GETTER_ERROR;
+    }
+    const result = walk(items, depth, opts, seen);
     seen.delete(ref);
     return result;
   }
@@ -178,10 +211,22 @@ function walk(
   if (Array.isArray(value)) {
     if (depth >= opts.maxDepth) return TRUNCATED_ARRAY;
     seen.add(ref);
-    const limited =
-      value.length > opts.maxArrayLength ? value.slice(0, opts.maxArrayLength) : value;
+    // Read the (capped) length here, then index element-by-element below. We
+    // deliberately avoid `value.slice(...)` because slice eagerly reads every
+    // element up front — a Proxy-backed/hostile element read would throw inside
+    // slice, before the per-element guard, crashing the walk.
+    const cap = Math.min(value.length, opts.maxArrayLength);
     const out: unknown[] = [];
-    for (const item of limited) {
+    for (let i = 0; i < cap; i++) {
+      let item: unknown;
+      // An array element read can throw on a Proxy-backed/hostile array;
+      // degrade that element to the getter marker rather than crashing.
+      try {
+        item = value[i];
+      } catch {
+        out.push(GETTER_ERROR);
+        continue;
+      }
       const walked = walk(item, depth + 1, opts, seen);
       // In arrays, an omitted item collapses to null to preserve index intent.
       out.push(walked === OMIT ? null : walked);
@@ -204,12 +249,33 @@ function walk(
 }
 
 /**
+ * Warn (dev only, once per compress call) when redaction is fully disabled —
+ * built-in deny-list off and no user matchers — so a sensitive value could pass
+ * through unredacted. The `NODE_ENV` guard makes this a runtime no-op in
+ * production; it never fires while any redaction is active.
+ */
+function warnIfRedactionDisabled(opts: ResolvedOptions): void {
+  if (opts.defaultSanitize || opts.sanitize.length > 0) return;
+  // Reference `process` via globalThis so the library stays zero-dependency and
+  // needs no Node type definitions; in production the guard is a runtime no-op.
+  const proc = (globalThis as { process?: { env?: { NODE_ENV?: string } } }).process;
+  if (typeof proc !== "undefined" && proc.env?.NODE_ENV !== "production") {
+    console.warn(
+      "react-context-compressor: redaction is fully disabled " +
+        "(defaultSanitize:false and no sanitize matchers); sensitive fields " +
+        "will NOT be redacted.",
+    );
+  }
+}
+
+/**
  * Mechanically compress a state value into a minimal payload, applying the
  * structural transforms in {@link CompressOptions}. Pure and deterministic;
  * the input is never mutated.
  */
 export function compressCore(state: unknown, options: CompressOptions = {}): unknown {
   const opts = resolveOptions(options);
+  warnIfRedactionDisabled(opts);
   const walked = walk(state, 0, opts, new WeakSet());
   // A top-level function/symbol compresses to undefined rather than a sentinel.
   return walked === OMIT ? undefined : walked;
