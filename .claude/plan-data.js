@@ -187,7 +187,14 @@ window.PLAN_DATA = {
         "name": "Task 004 React hook: memoized useCompressedContext, collision-free options signature; code review (1 blocking) fixed; 127 tests, 100%/99.13%. PR #9 -> develop.",
         "h_baseline": 2.0,
         "h_ai": 2.0
+      },
+      {
+        "num": "6",
+        "name": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop.",
+        "h_baseline": 4.0,
+        "h_ai": 4.0
       }
-    ]
+    ],
+    "completed": "2026-06-18"
   }
 };

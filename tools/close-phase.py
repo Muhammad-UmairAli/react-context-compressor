@@ -167,7 +167,7 @@ def main(argv: list[str]) -> int:
 
     # 4. Render-check.
     sys.stdout.flush()
-    rcheck = subprocess.run(["python", "tools/render-check.py", phase], check=False)
+    rcheck = subprocess.run([sys.executable, "tools/render-check.py", phase], check=False)
     if rcheck.returncode != 0:
         return 2
 
