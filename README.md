@@ -86,9 +86,10 @@ Components, on React 17 / 18 / 19.
 | Sanitize     | `sanitize`, `defaultSanitize`, … | Redact/remove sensitive fields (see below).                                             |
 
 It also handles awkward inputs predictably: **circular references** → `"[Circular]"`,
-a **throwing getter** → `"[Getter]"` (never crashes), `Date` kept as-is, `Map` →
-plain object, `Set` → array, functions/symbols dropped, `BigInt` → string. The
-input object is **never mutated**, and output is **deterministic**.
+a **throwing getter** → `"[Getter]"` (never crashes), `Date` → a copy, `Map` → plain
+object, `Set` / `TypedArray` → array, `RegExp` → its source string, `Error` →
+`{ name, message }`, functions/symbols dropped, `BigInt` → string. The input object
+is **never mutated**, and output is **deterministic**.
 
 ## Sanitization (data safety)
 

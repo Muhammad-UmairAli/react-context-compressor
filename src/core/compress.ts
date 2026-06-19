@@ -177,6 +177,31 @@ function walk(
   // Date is deep-copied so the output never shares a live reference with the
   // input (mutating the returned Date can't reach back into the source).
   if (value instanceof Date) return new Date(value.getTime());
+  // RegExp / Error / TypedArray get useful, JSON-friendly representations
+  // instead of flattening to `{}` (they have no own enumerable string keys) or
+  // a verbose index map. Reads are guarded (a hostile subclass could throw)
+  // and Error/TypedArray are re-walked so they inherit sanitize/strip/dropEmpty.
+  if (value instanceof RegExp) {
+    try {
+      return value.toString();
+    } catch {
+      return GETTER_ERROR;
+    }
+  }
+  if (value instanceof Error) {
+    try {
+      return walk({ name: value.name, message: value.message }, depth, opts, seen);
+    } catch {
+      return GETTER_ERROR;
+    }
+  }
+  if (ArrayBuffer.isView(value) && !(value instanceof DataView)) {
+    try {
+      return walk(Array.from(value as unknown as ArrayLike<number>), depth, opts, seen);
+    } catch {
+      return GETTER_ERROR;
+    }
+  }
   if (value instanceof Map) {
     seen.add(ref);
     const obj: Record<string, unknown> = {};
