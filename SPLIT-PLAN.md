@@ -106,10 +106,6 @@ Deferred from Phase 1 task 003 (sanitization) code review + security audit — n
 - **Optional key-length cap before matching (sec F7).** Defense-in-depth against ReDoS from consumer patterns over very long (e.g. Map-coerced) keys.
 - **Lower-signal deny-list additions.** `salt`, `hash`, `clientId`, `cert`/`pem` — higher false-positive risk; evaluate before adding.
 
-Deferred from Phase 1 task 004 (React hook) code review — blocking B1 (signature collision) fixed in PR:
-
-- **Cross-version React test matrix (A5).** Only React 19 is installed/tested; 17/18 compatibility rests on the `useMemo`-only surface. Pin with a React 17/18/19 matrix test if desired. _(Phase 2 task 002 addresses this.)_
-
 Deferred from Phase 2 round 1 (tasks 001 + 003) code review + security audit — no blocking; advisories only:
 
 - **CI: call `npm run attw`/`npm run publint` instead of bare `npx` (001).** The scripts are pinned in package.json; `npm run` guarantees the lockfile versions run.
