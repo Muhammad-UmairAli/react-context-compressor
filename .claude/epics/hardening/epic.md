@@ -1,8 +1,8 @@
 ---
 name: hardening
-status: backlog
+status: completed
 created: 2026-06-18T15:49:59Z
-progress: 50%
+progress: 100%
 prd: .claude/prds/hardening.md
 github: (will be set on sync)
 ---
@@ -77,9 +77,9 @@ changes). After all four merge to `develop`, cut the `0.2.0` release (release br
 ## Tasks Created
 
 - [x] 001.md - Packaging guards + sourcemap trim (parallel: true) — PR #19
-- [ ] 002.md - CI version matrices (parallel: false)
+- [x] 002.md - CI version matrices (parallel: false) — PR #24
 - [x] 003.md - Robustness hardening (parallel: true) — PR #20
-- [ ] 004.md - Edge-case test backfill (parallel: false)
+- [x] 004.md - Edge-case test backfill (parallel: false) — PR #25
 
 Total tasks: 4
 Parallel tasks: 2 (001, 003 — independent chains)
