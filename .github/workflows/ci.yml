@@ -84,7 +84,7 @@ jobs:
       # The published package targets Node >= 18; confirm the built ESM + CJS
       # entries load and export `compress` on Node 18 (the Vitest suite itself
       # needs newer Node, so it runs in the `build` matrix above).
-      - name: Import smoke (ESM + CJS)
+      - name: Import smoke (ESM + CJS exercise compress on Node 18)
         run: |
-          node -e "import('./dist/index.mjs').then(m => { if (typeof m.compress !== 'function') { throw new Error('ESM export missing'); } console.log('ESM ok:', m.compress({ a: 1 })); })"
-          node -e "const m = require('./dist/index.cjs'); if (typeof m.compress !== 'function') { throw new Error('CJS export missing'); } console.log('CJS ok');"
+          node -e "import('./dist/index.mjs').then(m => { const o = JSON.stringify(m.compress({ password: 'x', deep: { a: { b: 1 } } }, { maxDepth: 1 })); if (!o.includes('[REDACTED]') || !o.includes('[Object]')) { throw new Error('ESM behavior wrong: ' + o); } console.log('ESM ok:', o); })"
+          node -e "const m = require('./dist/index.cjs'); const o = JSON.stringify(m.compress({ password: 'x', deep: { a: { b: 1 } } }, { maxDepth: 1 })); if (!o.includes('[REDACTED]') || !o.includes('[Object]')) { throw new Error('CJS behavior wrong: ' + o); } console.log('CJS ok:', o);"
