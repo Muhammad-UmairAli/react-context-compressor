@@ -48,3 +48,5 @@ Human-readable audit trail of actual hours per phase per step. The canonical dat
 | 2026-06-18 | 2 | 1 | 0.4000 | claude | Phase 2 (hardening) decomposition: lean PRD + epic + 4 tasks (packaging guards, CI matrices, robustness, edge tests); validated via CCPM validate.sh |
 | 2026-06-18 | 2 | 2 | 0.2937 | claude | Task 001 packaging guards: attw + publint CI, sourcemap trim (tarball 17->12 files). Worktree agent; code review APPROVE. PR #19. |
 | 2026-06-18 | 2 | 4 | 0.2937 | claude | Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20. |
+| 2026-06-19 | 2 | 3 | 0.6367 | claude | Task 002 CI matrices: Node 20/22 + React 17/18/19 (SSR smoke) + Node-18 runtime smoke. Done in main tree (worktree agents hit session limit). PR #24; fixed Node-18/Vitest-styleText. |
+| 2026-06-19 | 2 | 5 | 0.2931 | claude | Task 004 edge cases: null-proto/maxArrayLength:0/dropEmpty-markers + RegExp/Error/TypedArray shapes (crash-safe). Code review B1 fixed + security audit. PR #25. |

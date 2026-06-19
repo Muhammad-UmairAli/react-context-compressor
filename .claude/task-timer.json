@@ -1,10 +1,1 @@
-{
-  "2-3": {
-    "started_at": "2026-06-19T11:53:57.572249+00:00",
-    "description": "Task 002: CI version matrices"
-  },
-  "2-5": {
-    "started_at": "2026-06-19T12:14:34.560652+00:00",
-    "description": "Task 004: Edge-case test backfill"
-  }
-}
+{}

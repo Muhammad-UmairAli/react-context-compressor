@@ -223,7 +223,20 @@ window.PLAN_DATA = {
         "name": "Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20.",
         "h_baseline": 3.0,
         "h_ai": 3.0
+      },
+      {
+        "num": "3",
+        "name": "Task 002 CI matrices: Node 20/22 + React 17/18/19 (SSR smoke) + Node-18 runtime smoke. Done in main tree (worktree agents hit session limit). PR #24; fixed Node-18/Vitest-styleText.",
+        "h_baseline": 2.0,
+        "h_ai": 2.0
+      },
+      {
+        "num": "5",
+        "name": "Task 004 edge cases: null-proto/maxArrayLength:0/dropEmpty-markers + RegExp/Error/TypedArray shapes (crash-safe). Code review B1 fixed + security audit. PR #25.",
+        "h_baseline": 2.0,
+        "h_ai": 2.0
       }
-    ]
+    ],
+    "completed": "2026-06-19"
   }
 };

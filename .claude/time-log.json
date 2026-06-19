@@ -310,5 +310,21 @@
     "hours": 0.29369281138888886,
     "who": "claude",
     "notes": "Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20."
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "3",
+    "hours": 0.6367392288888889,
+    "who": "claude",
+    "notes": "Task 002 CI matrices: Node 20/22 + React 17/18/19 (SSR smoke) + Node-18 runtime smoke. Done in main tree (worktree agents hit session limit). PR #24; fixed Node-18/Vitest-styleText."
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "5",
+    "hours": 0.2931402272222222,
+    "who": "claude",
+    "notes": "Task 004 edge cases: null-proto/maxArrayLength:0/dropEmpty-markers + RegExp/Error/TypedArray shapes (crash-safe). Code review B1 fixed + security audit. PR #25."
   }
 ]
