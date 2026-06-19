@@ -1,5 +1,22 @@
 # react-context-compressor
 
+## 0.2.0
+
+### Minor Changes
+
+- Hardening release.
+
+  - **Packaging:** `attw` + `publint` guards in CI; sourcemaps no longer shipped in the
+    published tarball (leaner install).
+  - **Compatibility:** CI tests Node 20/22 (+ a Node 18 runtime smoke) and React 17/18/19.
+  - **Robustness:** Proxy-backed / throwing `Map`/`Set`/array inputs degrade to a marker
+    instead of crashing; `Date` is deep-copied; `redactedValue` is string-coerced; a
+    dev-only warning fires when redaction is fully disabled.
+  - **Richer value shapes:** `RegExp` → source string, `Error` → `{ name, message }`,
+    `TypedArray` → number array.
+
+  No breaking API changes.
+
 ## 0.1.0
 
 ### Minor Changes

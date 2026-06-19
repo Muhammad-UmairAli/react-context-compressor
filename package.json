@@ -1,6 +1,6 @@
 {
   "name": "react-context-compressor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Mechanical, zero-dependency client-side compressor + sanitizer that turns React/JS app state into a minimal, safe payload for LLMs.",
   "type": "module",
   "license": "MIT",
