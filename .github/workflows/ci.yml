@@ -32,7 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [18, 20, 22]
+        # Full suite runs on Node the test toolchain supports (Vitest 4 needs
+        # node:util.styleText, i.e. Node >= 20.12). Node 18 runtime support is
+        # validated separately by the `node18-runtime` import smoke below.
+        node: [20, 22]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -66,3 +69,22 @@ jobs:
       # below does not use RTL).
       - run: npm install --no-save --legacy-peer-deps react@${{ matrix.react }} react-dom@${{ matrix.react }}
       - run: npx vitest run src/react/ssr-smoke.test.ts
+
+  node18-runtime:
+    name: Node 18 runtime smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+      # The published package targets Node >= 18; confirm the built ESM + CJS
+      # entries load and export `compress` on Node 18 (the Vitest suite itself
+      # needs newer Node, so it runs in the `build` matrix above).
+      - name: Import smoke (ESM + CJS)
+        run: |
+          node -e "import('./dist/index.mjs').then(m => { if (typeof m.compress !== 'function') { throw new Error('ESM export missing'); } console.log('ESM ok:', m.compress({ a: 1 })); })"
+          node -e "const m = require('./dist/index.cjs'); if (typeof m.compress !== 'function') { throw new Error('CJS export missing'); } console.log('CJS ok');"
