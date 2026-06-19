@@ -5,7 +5,10 @@
  *
  * Limitations (key-name-driven by design):
  *  - Matches field NAMES, not values: a secret under an innocuous key, or as a
- *    bare array/Set element (no key), is NOT detected.
+ *    bare array/Set element (no key), is NOT detected. In particular an
+ *    `Error.message` or `RegExp` source is emitted as a string value (only
+ *    redacted by its KEY) — don't store secrets in error messages under a
+ *    non-sensitive key.
  *  - Only own enumerable string keys are processed; Symbol-keyed / non-enumerable
  *    properties are dropped by the walker, never scanned.
  *  - Homoglyph attacks (e.g. Cyrillic look-alikes) are not fully closed; keys are
