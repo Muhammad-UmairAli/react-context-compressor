@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import type { CompressOptions } from "../index";
 import { compress } from "../index";
 import {
   CIRCULAR,
@@ -106,9 +107,15 @@ describe("compress — circular references", () => {
 });
 
 describe("compress — non-plain values", () => {
-  it("keeps Date instances", () => {
+  it("keeps Date instances (by value) but deep-copies them", () => {
     const d = new Date(0);
-    expect(compress({ d })).toEqual({ d });
+    const out = compress({ d }) as { d: Date };
+    expect(out).toEqual({ d });
+    // Distinct instance — the output never shares a live reference with input.
+    expect(out.d).not.toBe(d);
+    // Mutating the returned Date must not reach back into the input.
+    out.d.setFullYear(1999);
+    expect(d.getTime()).toBe(0);
   });
 
   it("converts Map to a plain object", () => {
@@ -217,5 +224,139 @@ describe("compress — security & robustness (review fixes)", () => {
     expect(() => compress(deep)).not.toThrow();
     // With Infinity the same input would overflow the stack — opt-in only.
     expect(() => compress(deep, { maxDepth: 5 })).not.toThrow();
+  });
+});
+
+describe("compress — proxy-safe iteration (003)", () => {
+  it("degrades a Map whose iteration throws to a marker instead of crashing", () => {
+    // A Map subclass whose iterator throws (mimics a Proxy-backed/hostile Map).
+    class HostileMap extends Map {
+      [Symbol.iterator](): IterableIterator<[unknown, unknown]> {
+        throw new Error("hostile map iteration");
+      }
+    }
+    const m = new HostileMap();
+    expect(() => compress({ m })).not.toThrow();
+    expect(compress({ m })).toEqual({ m: GETTER_ERROR });
+  });
+
+  it("degrades a Set whose iteration throws to a marker instead of crashing", () => {
+    class HostileSet extends Set {
+      [Symbol.iterator](): IterableIterator<unknown> {
+        throw new Error("hostile set iteration");
+      }
+    }
+    const s = new HostileSet();
+    expect(() => compress({ s })).not.toThrow();
+    expect(compress({ s })).toEqual({ s: GETTER_ERROR });
+  });
+
+  it("degrades a throwing array element read to a marker instead of crashing", () => {
+    // An array with a throwing index getter (mimics a Proxy-backed/hostile array).
+    const arr: unknown[] = [1, 2, 3];
+    Object.defineProperty(arr, "1", {
+      enumerable: true,
+      configurable: true,
+      get() {
+        throw new Error("hostile element read");
+      },
+    });
+    expect(() => compress({ arr })).not.toThrow();
+    expect(compress({ arr })).toEqual({ arr: [1, GETTER_ERROR, 3] });
+  });
+
+  it("degrades a throwing array element even when maxArrayLength caps the array", () => {
+    // Capped arrays must not read elements via slice (which would throw up front
+    // before the per-element guard); the indexed read degrades gracefully.
+    const arr: unknown[] = [1, 2, 3, 4, 5];
+    Object.defineProperty(arr, "1", {
+      enumerable: true,
+      configurable: true,
+      get() {
+        throw new Error("hostile element read");
+      },
+    });
+    expect(() => compress({ arr }, { maxArrayLength: 3 })).not.toThrow();
+    expect(compress({ arr }, { maxArrayLength: 3 })).toEqual({
+      arr: [1, GETTER_ERROR, 3, "[+2 more]"],
+    });
+  });
+
+  it("does not falsely flag a hostile Map reused in sibling positions as circular", () => {
+    // The Map catch path must still run seen.delete(ref) so a second sibling use
+    // degrades to the marker again, not to [Circular].
+    class HostileMap extends Map {
+      [Symbol.iterator](): IterableIterator<[unknown, unknown]> {
+        throw new Error("hostile map iteration");
+      }
+    }
+    const m = new HostileMap();
+    expect(compress({ a: m, b: m })).toEqual({ a: GETTER_ERROR, b: GETTER_ERROR });
+  });
+
+  it("does not falsely flag a hostile Set reused in sibling positions as circular", () => {
+    class HostileSet extends Set {
+      [Symbol.iterator](): IterableIterator<unknown> {
+        throw new Error("hostile set iteration");
+      }
+    }
+    const s = new HostileSet();
+    expect(compress({ a: s, b: s })).toEqual({ a: GETTER_ERROR, b: GETTER_ERROR });
+  });
+
+  it("coerces a non-string redactedValue to a string (JS caller bypass)", () => {
+    // A JS caller can pass a number despite the TS type; it must not leak as raw.
+    const out = compress({ password: "x" }, {
+      redactedValue: 0,
+    } as unknown as CompressOptions) as Record<string, unknown>;
+    expect(out.password).toBe("0");
+    expect(typeof out.password).toBe("string");
+  });
+
+  it("coerces a falsy non-string redactedValue rather than falling back to default", () => {
+    // `false` is non-nullish, so it must be String()-coerced, not replaced by the default.
+    const out = compress({ password: "x" }, {
+      redactedValue: false,
+    } as unknown as CompressOptions) as Record<string, unknown>;
+    expect(out.password).toBe("false");
+  });
+
+  it("falls back to the default when redactedValue coercion throws (hostile toString)", () => {
+    const hostile = {
+      toString() {
+        throw new Error("hostile toString");
+      },
+    };
+    expect(() =>
+      compress({ password: "x" }, { redactedValue: hostile } as unknown as CompressOptions),
+    ).not.toThrow();
+    const out = compress({ password: "x" }, {
+      redactedValue: hostile,
+    } as unknown as CompressOptions) as Record<string, unknown>;
+    expect(out.password).toBe("[REDACTED]");
+  });
+});
+
+describe("compress — dev-warning when redaction disabled (003)", () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("warns once when redaction is fully disabled (defaultSanitize:false, no matchers)", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    compress({ password: "x" }, { defaultSanitize: false });
+    expect(warn).toHaveBeenCalledTimes(1);
+  });
+
+  it("does NOT warn when redaction is active (defaults on)", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    compress({ password: "x" });
+    expect(warn).not.toHaveBeenCalled();
+  });
+
+  it("does NOT warn when built-ins are off but user matchers are supplied", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    compress({ password: "x" }, { defaultSanitize: false, sanitize: ["password"] });
+    expect(warn).not.toHaveBeenCalled();
   });
 });

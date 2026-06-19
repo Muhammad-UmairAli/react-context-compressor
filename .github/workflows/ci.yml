@@ -28,8 +28,35 @@ jobs:
       - uses: pre-commit/action@v3.0.1
 
   build:
-    name: Build, lint, test
+    name: Build, lint, test (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Full suite runs on Node the test toolchain supports (Vitest 4 needs
+        # node:util.styleText, i.e. Node >= 20.12). Node 18 runtime support is
+        # validated separately by the `node18-runtime` import smoke below.
+        node: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:cov
+      - run: npm run build
+      - run: npm run attw
+      - run: npm run publint
+      - run: npm run size
+
+  react-compat:
+    name: React ${{ matrix.react }} compat
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react: ["17", "18", "19"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,8 +64,27 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
-      - run: npm run typecheck
-      - run: npm run lint
-      - run: npm run test:cov
+      # Install the matrixed React major (no-save keeps the lockfile intact;
+      # legacy-peer-deps avoids the RTL peer conflict — the SSR smoke test
+      # below does not use RTL).
+      - run: npm install --no-save --legacy-peer-deps react@${{ matrix.react }} react-dom@${{ matrix.react }}
+      - run: npx vitest run src/react/ssr-smoke.test.ts
+
+  node18-runtime:
+    name: Node 18 runtime smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+      - run: npm ci
       - run: npm run build
-      - run: npm run size
+      # The published package targets Node >= 18; confirm the built ESM + CJS
+      # entries load and export `compress` on Node 18 (the Vitest suite itself
+      # needs newer Node, so it runs in the `build` matrix above).
+      - name: Import smoke (ESM + CJS exercise compress on Node 18)
+        run: |
+          node -e "import('./dist/index.mjs').then(m => { const o = JSON.stringify(m.compress({ password: 'x', deep: { a: { b: 1 } } }, { maxDepth: 1 })); if (!o.includes('[REDACTED]') || !o.includes('[Object]')) { throw new Error('ESM behavior wrong: ' + o); } console.log('ESM ok:', o); })"
+          node -e "const m = require('./dist/index.cjs'); const o = JSON.stringify(m.compress({ password: 'x', deep: { a: { b: 1 } } }, { maxDepth: 1 })); if (!o.includes('[REDACTED]') || !o.includes('[Object]')) { throw new Error('CJS behavior wrong: ' + o); } console.log('CJS ok:', o);"

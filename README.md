@@ -1,6 +1,7 @@
 # react-context-compressor
 
 [![npm version](https://img.shields.io/npm/v/react-context-compressor.svg)](https://www.npmjs.com/package/react-context-compressor)
+[![CI](https://github.com/Muhammad-UmairAli/react-context-compressor/actions/workflows/ci.yml/badge.svg)](https://github.com/Muhammad-UmairAli/react-context-compressor/actions/workflows/ci.yml)
 [![minzipped size](https://img.shields.io/bundlephobia/minzip/react-context-compressor)](https://bundlephobia.com/package/react-context-compressor)
 [![zero dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](https://www.npmjs.com/package/react-context-compressor?activeTab=dependencies)
 [![license](https://img.shields.io/npm/l/react-context-compressor.svg)](./LICENSE)
@@ -85,9 +86,10 @@ Components, on React 17 / 18 / 19.
 | Sanitize     | `sanitize`, `defaultSanitize`, … | Redact/remove sensitive fields (see below).                                             |
 
 It also handles awkward inputs predictably: **circular references** → `"[Circular]"`,
-a **throwing getter** → `"[Getter]"` (never crashes), `Date` kept as-is, `Map` →
-plain object, `Set` → array, functions/symbols dropped, `BigInt` → string. The
-input object is **never mutated**, and output is **deterministic**.
+a **throwing getter** → `"[Getter]"` (never crashes), `Date` → a copy, `Map` → plain
+object, `Set` / `TypedArray` → array, `RegExp` → its source string, `Error` →
+`{ name, message }`, functions/symbols dropped, `BigInt` → string. The input object
+is **never mutated**, and output is **deterministic**.
 
 ## Sanitization (data safety)
 
@@ -163,6 +165,24 @@ This library will **never** perform semantic / AI-powered summarization, make
 network calls, or run a local model. It is a mechanical, zero-cost, client-side
 object parser — that's the whole point (it saves you money _before_ the network
 layer). See [SPLIT-PLAN §2 (out of scope)](./SPLIT-PLAN.md).
+
+## Contributing & releasing
+
+Development uses Git Flow: feature branches → `develop` (PR required), releases
+promote `develop` → `main`.
+
+```sh
+npm install
+npm test          # vitest
+npm run typecheck && npm run lint && npm run build && npm run size
+```
+
+Each change adds a [changeset](https://github.com/changesets/changesets)
+(`npm run changeset`). To cut a release: branch `release/X.Y.Z` off `develop`,
+run `npx changeset version` (bumps the version + updates the changelog), open a
+PR to `main`, merge, then tag `vX.Y.Z`. Pushing the tag triggers
+[`.github/workflows/release.yml`](./.github/workflows/release.yml), which
+publishes to npm **with provenance** (once an `NPM_TOKEN` secret is configured).
 
 ## License
 

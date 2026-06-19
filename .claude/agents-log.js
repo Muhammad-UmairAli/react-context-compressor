@@ -79,5 +79,77 @@ window.AGENTS_LOG_DATA = [
     "agent_name": "voltagent-qa-sec:code-reviewer",
     "parallel": "n",
     "notes": "Task 005 docs review: APPROVE, 0 blocking; README verified against shipped API (no drift)"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "2",
+    "framework": "Claude",
+    "agent_name": "general-purpose",
+    "parallel": "y",
+    "notes": "Task 001 impl in worktree (packaging guards + sourcemap trim)"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "2",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "y",
+    "notes": "Task 001 review: APPROVE, 0 blocking"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "4",
+    "framework": "Claude",
+    "agent_name": "general-purpose",
+    "parallel": "y",
+    "notes": "Task 003 impl in worktree (robustness hardening)"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "4",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "y",
+    "notes": "Task 003 review: APPROVE, 0 blocking"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "4",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:security-auditor",
+    "parallel": "y",
+    "notes": "Task 003 audit: no Critical/High; no-leak preserved"
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "3",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "n",
+    "notes": "Task 002 review: APPROVE, 0 blocking"
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "5",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:code-reviewer",
+    "parallel": "y",
+    "notes": "Task 004 review: 1 blocking (Error getter crash) fixed"
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "5",
+    "framework": "VoltAgent",
+    "agent_name": "voltagent-qa-sec:security-auditor",
+    "parallel": "y",
+    "notes": "Task 004 audit: no Critical/High; sanitize-before-read intact; Error-message emission documented"
   }
 ];

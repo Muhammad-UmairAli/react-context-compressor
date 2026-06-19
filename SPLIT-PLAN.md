@@ -54,10 +54,11 @@ See [`docs/architecture-design-decisions.md`](docs/architecture-design-decisions
 
 <!-- One-line pointer rows, one per closed phase. Full closure detail lives in docs/phases/phase-NNN.md for non-trivial phases. -->
 
-| Date       | Phase                             | What was done                                                                                                                                                                                                                                                                      | What is next                                |
-| ---------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| 2026-06-17 | Phase 0 — Project Init            | Bootstrap via `init-project.sh`. See `TIME-LOG.md` Phase 0 rows for actuals.                                                                                                                                                                                                       | Define SPLIT-PLAN §1 (goals); open Phase 1. |
-| 2026-06-18 | Phase 1 — compress-state-for-llms | Shipped react-context-compressor v0 — compress core + sanitization + useCompressedContext hook + docs; tasks 001-005 merged (PRs #3/#5/#7/#9/#11); 129 tests, core ~1.35kB / react ~1.61kB gzip. Files NOT touched: docs/methodology, DASHBOARD theming, observability, sandboxes. | (closed)                                    |
+| Date       | Phase                               | What was done                                                                                                                                                                                                                                                                                                               | What is next                                |
+| ---------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| 2026-06-17 | Phase 0 — Project Init              | Bootstrap via `init-project.sh`. See `TIME-LOG.md` Phase 0 rows for actuals.                                                                                                                                                                                                                                                | Define SPLIT-PLAN §1 (goals); open Phase 1. |
+| 2026-06-18 | Phase 1 — compress-state-for-llms   | Shipped react-context-compressor v0 — compress core + sanitization + useCompressedContext hook + docs; tasks 001-005 merged (PRs #3/#5/#7/#9/#11); 129 tests, core ~1.35kB / react ~1.61kB gzip. Files NOT touched: docs/methodology, DASHBOARD theming, observability, sandboxes.                                          | (closed)                                    |
+| 2026-06-19 | Phase 2 — hardening-release-quality | Hardening pass complete — packaging guards (attw/publint) + sourcemap trim, Node 20/22 + Node-18-smoke + React 17/18/19 CI matrices, proxy-safe/robustness hardening, edge-case backfill + RegExp/Error/TypedArray shapes. Tasks 001-004 merged (PRs #19/#20/#24/#25); 151 tests, 98.7%/98.5% cov. Ready for 0.2.0 release. | (closed)                                    |
 
 ---
 
@@ -105,6 +106,16 @@ Deferred from Phase 1 task 003 (sanitization) code review + security audit — n
 - **Optional key-length cap before matching (sec F7).** Defense-in-depth against ReDoS from consumer patterns over very long (e.g. Map-coerced) keys.
 - **Lower-signal deny-list additions.** `salt`, `hash`, `clientId`, `cert`/`pem` — higher false-positive risk; evaluate before adding.
 
-Deferred from Phase 1 task 004 (React hook) code review — blocking B1 (signature collision) fixed in PR:
+Deferred from Phase 2 round 1 (tasks 001 + 003) code review + security audit — no blocking; advisories only:
 
-- **Cross-version React test matrix (A5).** Only React 19 is installed/tested; 17/18 compatibility rests on the `useMemo`-only surface. Pin with a React 17/18/19 matrix test if desired.
+- **Dangling `sourceMappingURL` comments in published JS (001).** Maps are excluded from the tarball but the `//# sourceMappingURL` comments remain (harmless; publint passes). Drop them from the published build for a fully-clean tarball.
+- **Dev-warning one-shot latch (003).** `warnIfRedactionDisabled` fires once per `compress` call; with `defaultSanitize:false` in a React render path it can flood the console. Use a module-level `let warned` latch (dev-only).
+- **Harden `NODE_ENV` read vs hostile `process` shim (003).** `proc.env?.NODE_ENV` could throw if a third party defines a `globalThis.process` with a throwing `env` getter; wrap in try/catch so `compress` never throws.
+
+Deferred from Phase 2 round 2 (tasks 002 + 004) code review — no blocking; advisories only:
+
+- **`react-compat` uses bare `npx vitest` (002).** For consistency with the `npm run` migration, run the SSR smoke via a pinned script.
+- **CI `concurrency` group + `fail-fast` (002).** With the matrices, add `concurrency: { group: …, cancel-in-progress: true }` to cancel redundant runs (CI-minutes hygiene).
+- **Packaging checks run on every Node cell (002).** `attw`/`publint`/`size` are runtime-independent; gate them to one matrix leg (e.g. `if: matrix.node == 20`).
+- **React bundle approaching the size-limit (004).** `./react` is ~1.86 kB against the 2 kB budget (~140 B headroom). Review/raise the budget or trim before it blocks a future PR.
+- **Defensive catch-path coverage (004).** The RegExp/TypedArray `try/catch → [Getter]` branches are uncovered (hard to trigger without hostile subclasses); add contrived tests or accept the ~98.7% statements.

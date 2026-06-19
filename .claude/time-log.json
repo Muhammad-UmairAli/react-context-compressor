@@ -278,5 +278,53 @@
     "hours": 0.2021187475,
     "who": "claude",
     "notes": "Task 005 docs: README + runnable example (97.7% reduction demo) + example test (>=50% CI guard) + MIT license; code review APPROVE (no drift). PR #11 -> develop."
+  },
+  {
+    "datetime": "2026-06-18T15:49:51Z",
+    "phase": "2",
+    "step": "0",
+    "hours": 0.05,
+    "who": "claude",
+    "notes": "Phase 2 opened — SPLIT-PLAN §5 (progress log) + docs/phases/phase-002.md skeleton"
+  },
+  {
+    "datetime": "2026-06-18T15:52:30Z",
+    "phase": "2",
+    "step": "1",
+    "hours": 0.4,
+    "who": "claude",
+    "notes": "Phase 2 (hardening) decomposition: lean PRD + epic + 4 tasks (packaging guards, CI matrices, robustness, edge tests); validated via CCPM validate.sh"
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "2",
+    "hours": 0.2936919736111111,
+    "who": "claude",
+    "notes": "Task 001 packaging guards: attw + publint CI, sourcemap trim (tarball 17->12 files). Worktree agent; code review APPROVE. PR #19."
+  },
+  {
+    "datetime": "2026-06-18T16:15:24Z",
+    "phase": "2",
+    "step": "4",
+    "hours": 0.29369281138888886,
+    "who": "claude",
+    "notes": "Task 003 robustness: proxy-safe reads, Date copy, redactedValue coercion, dev-warn. Worktree agent; code review + security audit clean. PR #20."
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "3",
+    "hours": 0.6367392288888889,
+    "who": "claude",
+    "notes": "Task 002 CI matrices: Node 20/22 + React 17/18/19 (SSR smoke) + Node-18 runtime smoke. Done in main tree (worktree agents hit session limit). PR #24; fixed Node-18/Vitest-styleText."
+  },
+  {
+    "datetime": "2026-06-19T12:32:09Z",
+    "phase": "2",
+    "step": "5",
+    "hours": 0.2931402272222222,
+    "who": "claude",
+    "notes": "Task 004 edge cases: null-proto/maxArrayLength:0/dropEmpty-markers + RegExp/Error/TypedArray shapes (crash-safe). Code review B1 fixed + security audit. PR #25."
   }
 ]
