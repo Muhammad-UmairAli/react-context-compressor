@@ -1,5 +1,12 @@
 # react-context-compressor
 
+## 0.2.1
+
+### Patch Changes
+
+- docs: add a demo GIF to the README illustrating what `compress()` does (large app
+  state → minimal, secret-free LLM payload).
+
 ## 0.2.0
 
 ### Minor Changes

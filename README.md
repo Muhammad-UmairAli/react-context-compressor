@@ -16,6 +16,10 @@ It is **100% mechanical**: no network calls, no models, no AI summarization
 (see [Non-goals](#non-goals)). A framework-agnostic core (`.`) plus a thin React
 bindings layer (`./react`).
 
+<p align="center">
+  <img src="./docs/assets/compress-demo.gif" alt="Demo: compress() shrinks a large app state object for LLM payloads" width="720" />
+</p>
+
 ```
 Before: 17,763 chars  →  After: 402 chars   (97.7% smaller, secrets redacted)
 ```
